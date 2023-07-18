@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.plantcareapplication.Models.Wallpaper;
+import com.example.plantcareapplication.Models.Groceries;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +26,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.UUID;
 
-public class AddingWallpapersActivity extends AppCompatActivity {
+public class AddingGroceriesActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Button pickImageButton;
@@ -36,7 +36,7 @@ public class AddingWallpapersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_wallpapers);
         mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage("Adding Plant...");
+        mProgressDialog.setMessage("Adding Groceries...");
         mProgressDialog.setCancelable(false);
 
         pickImageButton = findViewById(R.id.uploadButton);
@@ -70,28 +70,23 @@ public class AddingWallpapersActivity extends AppCompatActivity {
         EditText DescriptionEditText = findViewById(R.id.DescriptionEditText);
         String description =DescriptionEditText.getText().toString();
 
-        EditText instructionsEditText=findViewById(R.id.instructionsEditText);
-        String instructions = instructionsEditText.getText().toString();
+        EditText priceEditText=findViewById(R.id.priceEditText);
+        String price = priceEditText.getText().toString();
 
-        EditText wateringScheduleEditText=findViewById(R.id.wateringScheduleEditText);
-        String watering = wateringScheduleEditText.getText().toString();
-
-        EditText MaintenanceEditText=findViewById(R.id.MaintenanceEditText);
-        String maintenance=MaintenanceEditText.getText().toString();
-
+      
         if (imageUri != null && !plantTitle.isEmpty()
                 && !description.isEmpty()
-                && !instructions.isEmpty() && !watering.isEmpty() && !maintenance.isEmpty()) {
+                && !price.isEmpty() ) {
             // Create a reference to the "Wallpapers" folder in Firebase Storage
-            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("Plants")
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("Groceries")
                     .child(UUID.randomUUID().toString()); // Use a random UUID as the image name
 
             // Upload the image file to Firebase Storage
             UploadTask uploadTask = storageRef.putFile(imageUri);
 
             // Show a progress dialog or update UI to indicate the upload progress
-            ProgressDialog progressDialog = new ProgressDialog(AddingWallpapersActivity.this);
-            progressDialog.setTitle("Uploading Plants");
+            ProgressDialog progressDialog = new ProgressDialog(AddingGroceriesActivity.this);
+            progressDialog.setTitle("Uploading Groceries");
             progressDialog.setMessage("Please wait...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
             progressDialog.setMax(100);
@@ -116,17 +111,17 @@ public class AddingWallpapersActivity extends AppCompatActivity {
                         public void onSuccess(Uri downloadUrl) {
                             String imageUrl = downloadUrl.toString();
                             saveImageUrlToFirebase(imageUrl, plantTitle,description,
-                                    instructions,watering,maintenance);
+                                    price);
 
                             progressDialog.dismiss();
                             mProgressDialog.dismiss();// Dismiss the progress dialog
-                            Toast.makeText(AddingWallpapersActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddingGroceriesActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             // Handle the failure to get the download URL
-                            Toast.makeText(AddingWallpapersActivity.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddingGroceriesActivity.this, "Failed to get download URL", Toast.LENGTH_SHORT).show();
                             mProgressDialog.dismiss();
                             progressDialog.dismiss(); // Dismiss the progress dialog
                         }
@@ -138,31 +133,32 @@ public class AddingWallpapersActivity extends AppCompatActivity {
                     // Handle the failure to upload the image
                     mProgressDialog.dismiss();
                     progressDialog.dismiss(); // Dismiss the progress dialog
-                    Toast.makeText(AddingWallpapersActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddingGroceriesActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
     private void saveImageUrlToFirebase(String imageUrl, String plantTitle, String description,
-                                        String instructions, String watering, String maintenance)
+                                        String price)
     {    DatabaseReference wallpapersRef = FirebaseDatabase.getInstance().getReference()
-            .child("Plants");
+            .child("Groceries");
         mProgressDialog.show();
         // Generate a unique key for the image
         String imageKey = wallpapersRef.push().getKey();
 
         // Create a wallpaper object with the image URL and title
-        Wallpaper wallpaper = new Wallpaper(imageKey, imageUrl, plantTitle,description,instructions,watering,maintenance);
+        Groceries wallpaper = 
+                new Groceries(imageKey, imageUrl, plantTitle,description,price);
 
-        // Save the wallpaper object under the generated key in the "Plants" node
+        // Save the wallpaper object under the generated key in the "Groceries" node
         wallpapersRef.child(imageKey).setValue(wallpaper)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         mProgressDialog.dismiss();
                         // Wallpaper details saved successfully
-                        Toast.makeText(AddingWallpapersActivity.this, "Plant details saved successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddingGroceriesActivity.this, "Grocery details saved successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -170,7 +166,7 @@ public class AddingWallpapersActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         mProgressDialog.dismiss();
                         // Handle the failure to save the wallpaper details
-                        Toast.makeText(AddingWallpapersActivity.this, "Failed to save Plant details", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddingGroceriesActivity.this, "Failed to save Grocery details", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

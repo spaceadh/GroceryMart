@@ -9,8 +9,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.plantcareapplication.Models.Wallpaper;
-import com.example.plantcareapplication.adapters.WallpaperAdapter;
+import com.example.plantcareapplication.Models.Groceries;
+import com.example.plantcareapplication.adapters.GroceriesAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,11 +21,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PickWallpaperActivity extends AppCompatActivity {
+public class PickGroceriesActivity extends AppCompatActivity {
 
     private ListView listView;
-    private WallpaperAdapter adapter;
-    private List<Wallpaper> wallpaperList;
+    private GroceriesAdapter adapter;
+    private List<Groceries> wallpaperList;
     private DatabaseReference wallpaperRef;
 
     @Override
@@ -34,16 +34,16 @@ public class PickWallpaperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pick_wallpaper);
 
         wallpaperList = new ArrayList<>();
-        wallpaperRef = FirebaseDatabase.getInstance().getReference().child("Plants");
+        wallpaperRef = FirebaseDatabase.getInstance().getReference().child("Groceries");
 
         listView = findViewById(R.id.listView);
-        adapter = new WallpaperAdapter(this, wallpaperList);
+        adapter = new GroceriesAdapter(this, wallpaperList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Wallpaper selectedWallpaper = wallpaperList.get(position);
+                Groceries selectedWallpaper = wallpaperList.get(position);
                 String wallpaperId = selectedWallpaper.getImageKey();
                 passIntentToInstructionsPage(wallpaperId);
             }
@@ -60,7 +60,7 @@ public class PickWallpaperActivity extends AppCompatActivity {
                 wallpaperList.clear();
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Wallpaper wallpaper = snapshot.getValue(Wallpaper.class);
+                    Groceries wallpaper = snapshot.getValue(Groceries.class);
                     wallpaperList.add(wallpaper);
                 }
 
@@ -69,13 +69,13 @@ public class PickWallpaperActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(PickWallpaperActivity.this, "Failed to load wallpapers", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PickGroceriesActivity.this, "Failed to load wallpapers", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void passIntentToInstructionsPage(String wallpaperId) {
-        Intent intent = new Intent(PickWallpaperActivity.this, com.example.plantcareapplication.InstructionsPage.class);
+        Intent intent = new Intent(PickGroceriesActivity.this, com.example.plantcareapplication.InstructionsPage.class);
         intent.putExtra("WallpaperId", wallpaperId);
         startActivity(intent);
     }

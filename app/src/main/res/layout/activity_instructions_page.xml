@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#4B3621"
+    android:background="@color/lavender"
     tools:context=".InstructionsPage">
 
     <ImageView
@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/wallpaperImageView"
         android:textSize="20sp"
+        android:fontFamily="@font/baloo"
+        android:textColor="@color/black"
         android:textStyle="bold"
         android:layout_marginTop="16dp" />
 
@@ -26,32 +28,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleTextView"
+        android:fontFamily="@font/alegreya"
+        android:textColor="@color/black"
         android:layout_marginTop="8dp" />
     <TextView
-        android:id="@+id/instructionsTextView"
+        android:id="@+id/priceTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionTextView"
-        android:layout_marginTop="8dp" />
-    <TextView
-        android:id="@+id/wateringTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/instructionsTextView"
-        android:layout_marginTop="8dp" />
-    <TextView
-        android:id="@+id/MaintenanceTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/wateringTextView"
+        android:textColor="@color/black"
+        android:fontFamily="@font/balthazar"
         android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/moreInfoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/MaintenanceTextView"
+        android:layout_below="@id/priceTextView"
         android:layout_marginTop="16dp"
-        android:text="For More Information" />
+        android:fontFamily="@font/alegreya"
+        android:layout_centerHorizontal="true"
+        android:text="Paypal Checkout" />
 
 </RelativeLayout>

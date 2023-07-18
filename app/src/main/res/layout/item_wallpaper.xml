@@ -6,7 +6,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_marginTop="5dp"
-    android:background="#4B3621"
+    android:background="@color/lavender"
     android:padding="8dp">
 
     <ImageView
@@ -28,11 +28,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
+            android:fontFamily="@font/baloo"
+            android:textColor="@color/black"
             android:textStyle="bold" />
         <TextView
             android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:fontFamily="@font/alegreya"
             android:textSize="12sp"/>
     </LinearLayout>
 

@@ -18,14 +18,11 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-//import com.example.loveu.Fragments.BlogFragment;
-
 public class GuestActivity extends AppCompatActivity {
 
     private TextView welcomeGuestTextView;
     private ImageView menuIcon;
     private ImageView fluffyImageView;
-    //  private SignupActivityFragment signupActivityFragment;
     private PopupWindow menuPopupWindow;
 
     @Override

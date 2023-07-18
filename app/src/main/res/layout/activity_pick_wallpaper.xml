@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#4B3621"
+    android:background="@color/lavender"
     android:padding="16dp">
 
     <TextView
@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Pick Wallpaper"
+        android:fontFamily="@font/baloo"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
 

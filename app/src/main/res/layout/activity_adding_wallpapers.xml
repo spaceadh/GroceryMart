@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#4B3621">
+    android:background="@color/lavender">
     <EditText
         android:id="@+id/titleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your Plant`s Name"
+        android:hint="Enter your Grocery`s Name"
         android:textColor="@color/black"
         android:layout_marginTop="3dp"
+        android:fontFamily="@font/balthazar"
         android:textColorHint="@color/black"
         android:background="@drawable/rounded_edittext"
         android:padding="16dp" />
@@ -19,43 +20,23 @@
         android:id="@+id/DescriptionEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter your Plant`s Description"
+        android:hint="Enter your Grocery`s Description"
         android:textColor="@color/black"
         android:layout_marginTop="3dp"
+        android:fontFamily="@font/balthazar"
         android:layout_below="@id/titleEditText"
         android:textColorHint="@color/black"
         android:background="@drawable/rounded_edittext"
         android:padding="16dp" />
     <EditText
-        android:id="@+id/instructionsEditText"
+        android:id="@+id/priceEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter plants special Instructions"
+        android:hint="Enter Price"
+        android:fontFamily="@font/balthazar"
         android:textColor="@color/black"
         android:layout_marginTop="3dp"
         android:layout_below="@id/DescriptionEditText"
-        android:textColorHint="@color/black"
-        android:background="@drawable/rounded_edittext"
-        android:padding="16dp" />
-    <EditText
-        android:id="@+id/wateringScheduleEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your Watering Instructions"
-        android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:layout_below="@id/instructionsEditText"
-        android:textColorHint="@color/black"
-        android:background="@drawable/rounded_edittext"
-        android:padding="16dp" />
-    <EditText
-        android:id="@+id/MaintenanceEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your Maintenance Instructions"
-        android:textColor="@color/black"
-        android:layout_marginTop="3dp"
-        android:layout_below="@id/wateringScheduleEditText"
         android:textColorHint="@color/black"
         android:background="@drawable/rounded_edittext"
         android:padding="16dp" />
@@ -64,7 +45,8 @@
         android:id="@+id/uploadButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/MaintenanceEditText"
-        android:text="Upload Image" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/priceEditText"
+        android:text="Upload Grocery" />
 
 </RelativeLayout>

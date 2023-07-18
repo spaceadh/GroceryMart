@@ -18,7 +18,7 @@
             android:name=".GuestActivity"
             android:exported="false" />
         <activity
-            android:name=".AddingWallpapersActivity"
+            android:name=".AddingGroceriesActivity"
             android:exported="false" />
         <activity
             android:name=".InstructionsPage"
@@ -27,7 +27,7 @@
             android:name=".WelcomeClientActivity"
             android:exported="false" />
         <activity
-            android:name=".PickWallpaperActivity"
+            android:name=".PickGroceriesActivity"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"

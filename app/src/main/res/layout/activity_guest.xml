@@ -2,13 +2,13 @@
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4B3621">
+    android:background="@color/lavender">
 
     <RelativeLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#4B3621">
+        android:background="@color/lavender">
 
         <TextView
             android:id="@+id/welcome_guest_text"
@@ -22,7 +22,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="@font/baloo"
             android:text="Welcome Guest"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageView
@@ -64,9 +64,10 @@
                 android:layout_below="@id/fluffy_image"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:text="PlantCare"
+                android:text="GroceriesMart"
+                android:fontFamily="@font/balthazar"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold" />
         </RelativeLayout>

@@ -9,17 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.plantcareapplication.Models.Wallpaper;
+import com.example.plantcareapplication.Models.Groceries;
 import com.example.plantcareapplication.R;
 
 import java.util.List;
 
-public class WallpaperAdapter extends BaseAdapter {
+public class GroceriesAdapter extends BaseAdapter {
 
     private Context context;
-    private List<Wallpaper> wallpaperList;
+    private List<Groceries> wallpaperList;
 
-    public WallpaperAdapter(Context context, List<Wallpaper> wallpaperList) {
+    public GroceriesAdapter(Context context, List<Groceries> wallpaperList) {
         this.context = context;
         this.wallpaperList = wallpaperList;
     }
@@ -54,8 +54,9 @@ public class WallpaperAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Wallpaper wallpaper = wallpaperList.get(position);
+        Groceries wallpaper = wallpaperList.get(position);
         holder.titleTextView.setText(wallpaper.getImageTitle());
+        holder.descriptionTextView.setText(wallpaper.getDescription());
         Glide.with(context)
                 .load(wallpaper.getImageUrl())
                 .into(holder.wallpaperImageView);

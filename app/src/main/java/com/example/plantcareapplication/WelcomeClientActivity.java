@@ -18,8 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Calendar;
-
 public class WelcomeClientActivity extends AppCompatActivity {
 
     private static final long DELAY_TIME = 2000; // Delay time in milliseconds
@@ -51,7 +49,7 @@ public class WelcomeClientActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Start the next activity
-                Intent intent = new Intent(WelcomeClientActivity.this, PickWallpaperActivity.class);
+                Intent intent = new Intent(WelcomeClientActivity.this, PickGroceriesActivity.class);
                 startActivity(intent);
 
                 // Finish this activity

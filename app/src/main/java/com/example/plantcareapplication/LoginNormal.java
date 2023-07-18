@@ -2,21 +2,17 @@ package com.example.plantcareapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -81,7 +77,7 @@ public class LoginNormal extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(LoginNormal.this, "Sign In successful. Welcome back to PlantCare", Toast.LENGTH_SHORT);
+                            Toast.makeText(LoginNormal.this, "Sign In successful. Welcome back to GroceriesMart", Toast.LENGTH_SHORT);
                             //Toast.makeText(LoginNormal.this, "Sign-in successful.", Toast.LENGTH_SHORT).show();
                             // Proceed with further actions or navigate to another activity
                             // For example:
@@ -98,17 +94,17 @@ public class LoginNormal extends AppCompatActivity {
     private void updateUserRole(FirebaseUser firebaseUser) {
         String userId = firebaseUser.getUid();
 
-        DatabaseReference usersRef = mDatabase.getReference("Users");
+        DatabaseReference usersRef = mDatabase.getReference("MartUsers");
 
-        usersRef.child("Admins").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        usersRef.child("Managers").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     // User is an admin
-                    Toast.makeText(LoginNormal.this, "Welcome back to PlantCare ,Admin", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginNormal.this, "Welcome back to GroceriesMart, Managers", Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(LoginNormal.this, "Welcome Admin", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginNormal.this, AddingWallpapersActivity.class));
+                    Toast.makeText(LoginNormal.this, "Welcome Manager", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginNormal.this, AddingGroceriesActivity.class));
                     finish(); // Finish the current activity
                 } else {
                     usersRef.child("Clients").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {

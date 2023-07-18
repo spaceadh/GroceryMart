@@ -1,17 +1,14 @@
 package com.example.plantcareapplication;
 
-import android.app.Notification;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
-import android.util.Log;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,16 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -45,17 +35,20 @@ public class SignupActivity extends AppCompatActivity {
     private Button buttonSignup;
     private FirebaseAuth mAuth;
     private Handler handler;
+    private ProgressDialog mProgressDialog;
     private ProgressBar progressBar;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference buyerReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set the activity to always use night mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_signup);
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Signing Up...");
+        mProgressDialog.setCancelable(false);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         FirebaseApp.initializeApp(this);
@@ -67,7 +60,7 @@ public class SignupActivity extends AppCompatActivity {
         firebaseDatabase.getReference().keepSynced(true);
 
         // Set the buyer reference
-        buyerReference = firebaseDatabase.getReference("Users").child("Clients");
+        buyerReference = firebaseDatabase.getReference("MartUsers").child("Clients");
 
         editTextUsername = findViewById(R.id.username_input);
         editTextEmail = findViewById(R.id.emailinput);
@@ -79,7 +72,6 @@ public class SignupActivity extends AppCompatActivity {
         buttonSignup.setOnClickListener(view -> {
             String username = editTextUsername.getText().toString();
             String email = editTextEmail.getText().toString();
-            //String phoneNumber = editTextPhoneNumber.getText().toString();
             String password = editTextPassword.getText().toString();
             String confirmPassword = editTextConfirmPassword.getText().toString();
 
@@ -99,12 +91,10 @@ public class SignupActivity extends AppCompatActivity {
             // Move the cursor to the end of the password field
             editTextPassword.setSelection(editTextPassword.getText().length());
         });
-
-
-        //Log.d(TAG, "SignupActivity created."); // Log message to console
     }
 
     private void signup(String username, String email, String password, String confirmPassword) {
+        mProgressDialog.show();
         // Trim leading/trailing spaces from entered credentials
         String trimmedUsername = username.trim();
         String trimmedEmail = email.trim();
@@ -138,18 +128,20 @@ public class SignupActivity extends AppCompatActivity {
 
                                         addToDatabase(newUser, buyerReference);
 
-                                        Toast.makeText(SignupActivity.this,"Signup successful. Welcome to PlantCare", Toast.LENGTH_SHORT);
+                                        mProgressDialog.dismiss();
+                                        Toast.makeText(SignupActivity.this,"Signup successful. Welcome to GroceriesMart", Toast.LENGTH_SHORT);
                                         Toast.makeText(SignupActivity.this,"Kindly login again to complete the registration process", Toast.LENGTH_SHORT);
 
                                         // Delay for 2 seconds before navigating to the next page
                                         handler = new Handler();
                                         handler.postDelayed(() -> {
-                                            Intent intent = new Intent(SignupActivity.this, PickWallpaperActivity.class);
+                                            Intent intent = new Intent(SignupActivity.this, GuestActivity.class);
                                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                             startActivity(intent);
                                             finish();
                                         }, 2000); // Delay duration in milliseconds
                                     } else {
+                                        mProgressDialog.dismiss();
                                         Toast.makeText(SignupActivity.this,"Account with similar account present.", Toast.LENGTH_SHORT);
                                         Toast.makeText(SignupActivity.this,"Please try to login with existing credentials.", Toast.LENGTH_SHORT);
                                         Toast.makeText(SignupActivity.this,"Or use a different Email \uD83D\uDE42 ", Toast.LENGTH_SHORT);
@@ -160,6 +152,7 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 }
             } else {
+                mProgressDialog.dismiss();
                 Toast.makeText(SignupActivity.this,"An error occurred. Please try again.", Toast.LENGTH_SHORT);
             }
         });

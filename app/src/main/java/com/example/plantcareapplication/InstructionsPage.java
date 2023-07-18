@@ -24,7 +24,7 @@ public class InstructionsPage extends AppCompatActivity {
     private ImageView wallpaperImageView;
     private TextView titleTextView;
     private TextView descriptionTextView;
-    private TextView instructionsTextView;
+    private TextView priceTextView;
     private TextView wateringTextView,MaintenanceTextView;
     private Button moreInfoButton;
     private DatabaseReference wallpaperRef;
@@ -37,13 +37,11 @@ public class InstructionsPage extends AppCompatActivity {
         wallpaperImageView = findViewById(R.id.wallpaperImageView);
         titleTextView = findViewById(R.id.titleTextView);
         descriptionTextView = findViewById(R.id.descriptionTextView);
-        instructionsTextView=findViewById(R.id.instructionsTextView);
-        wateringTextView=findViewById(R.id.wateringTextView);
-        MaintenanceTextView=findViewById(R.id.MaintenanceTextView);
+        priceTextView=findViewById(R.id.priceTextView);
 
         moreInfoButton = findViewById(R.id.moreInfoButton);
 
-        wallpaperRef = FirebaseDatabase.getInstance().getReference().child("Plants");
+        wallpaperRef = FirebaseDatabase.getInstance().getReference().child("Groceries");
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("WallpaperId")) {
@@ -70,18 +68,14 @@ public class InstructionsPage extends AppCompatActivity {
                     String imageUrl = dataSnapshot.child("imageUrl").getValue(String.class);
                     String title = dataSnapshot.child("imageTitle").getValue(String.class);
                     String description = dataSnapshot.child("description").getValue(String.class);
-                    String instructions =dataSnapshot.child("instructions").getValue(String.class);
-                    String watering =dataSnapshot.child("watering").getValue(String.class);
-                    String maintenance=dataSnapshot.child("maintenance").getValue(String.class);
+                    String price =dataSnapshot.child("price").getValue(String.class);
                     Glide.with(InstructionsPage.this)
                             .load(imageUrl)
                             .into(wallpaperImageView);
 
                     titleTextView.setText(title);
-                    descriptionTextView.setText("Plant Description : "+description);
-                    MaintenanceTextView.setText("Maintenance mechanisms are : "+maintenance);
-                    wateringTextView.setText("Watering times are : "+watering);
-                    instructionsTextView.setText("Instructions are :"+instructions);
+                    descriptionTextView.setText("Price Description is : "+description);
+                    priceTextView.setText("Price is :"+price);
                 }
             }
 
@@ -93,7 +87,7 @@ public class InstructionsPage extends AppCompatActivity {
     }
 
     private void openBrowserForMoreInformation() {
-        String url = "https://plantcaretoday.com/"; // Replace with your desired URL
+        String url = "https://www.paypal.com/myaccount/"; // Replace with your desired URL
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
     }
